@@ -17,8 +17,8 @@ public class TestEntity extends Entity
         System.out.println(toPrint);
     }
 
-    public TestEntity(Ticker ticker)
+    public TestEntity(Ticker ticker,int startX, int startY)
     {
-        super(ticker);
+        super(ticker,startX,startY);
     }
 }

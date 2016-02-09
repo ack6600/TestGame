@@ -12,10 +12,17 @@ public abstract class Entity extends Tickable
     private int posX;
     private int posY;
     private RenderObject renderObject;
-    public Entity(Ticker ticker)
+    public Entity(Ticker ticker, int startX, int startY)
     {
         super(ticker);
+        posX = startX;
+        posY = startY;
     }
+    public void bindRenderObject(RenderObject renderObject)
+    {
+        this.renderObject = renderObject;
+    }
+
     public int getPosX()
     {
         return posX;
@@ -23,7 +30,10 @@ public abstract class Entity extends Tickable
     public void setPosX(int posX)
     {
         this.posX = posX;
-        renderObject.setX(posX);
+        if(renderObject != null)
+        {
+            renderObject.setX(posX);
+        }
     }
     public int getPosY()
     {
@@ -32,14 +42,20 @@ public abstract class Entity extends Tickable
     public void setPosY(int posY)
     {
         this.posY = posY;
-        renderObject.setY(posY);
+        if(renderObject!=null)
+        {
+            renderObject.setY(posY);
+        }
     }
     public void move(int x, int y)
     {
         this.setPosX(getPosX()+x);
-        renderObject.setX(renderObject.getPosX()+x);
         this.setPosY(getPosY()+y);
-        renderObject.setY(renderObject.getPosY()+y);
+        if(renderObject != null)
+        {
+            renderObject.setX(renderObject.getPosX() + x);
+            renderObject.setY(renderObject.getPosY() + y);
+        }
     }
     @Override
     public abstract void tick();

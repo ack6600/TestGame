@@ -1,7 +1,10 @@
 package main;
 
+import render.AnimatedRenderObject;
+import render.RenderObject;
 import render.StaticRenderObject;
 import util.KeyHelper;
+import world.Tickable;
 import world.World;
 
 import javax.swing.*;
@@ -15,6 +18,7 @@ public class GameWrapper
 {
     private static World world;
     private RenderEngine engine;
+    public enum RenderObjectTypes {Static,Animated}
     public GameWrapper(RenderEngine engine)
     {
         this.engine = engine;
@@ -51,22 +55,43 @@ public class GameWrapper
             e.printStackTrace();
         }
         g = new GameWrapper(renderEngine);
-        TestEntity testEntity = new TestEntity(g.generateWorld().getTicker());
-        testEntity.setPosX(100);
-        StaticRenderObject staticRenderObject = null;
-        try
-        {
-            staticRenderObject = new StaticRenderObject("src/textures/floor.png",testEntity.getPosX(),testEntity.getPosY());
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        renderEngine.addObject(staticRenderObject);
+        TestEntity testEntity = new TestEntity(g.generateWorld().getTicker(),20,20);
+        String[] textures = {"src/textures/floor.png"};
+        g.addTickable(testEntity,textures,testEntity.getPosX(),testEntity.getPosY(),RenderObjectTypes.Static,0);
 
 
     }
-    public void addObject(Entity entity, String filePath, int x, int y)
+    public boolean addTickable(Entity entity, String filePath[], int x, int y,RenderObjectTypes renderObjectTypes,int delay)
     {
-
+        RenderObject renderObject = null;
+        if(renderObjectTypes == RenderObjectTypes.Static)
+        {
+            try
+            {
+                renderObject = new StaticRenderObject(filePath[0],x,y);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else if(renderObjectTypes == RenderObjectTypes.Animated)
+        {
+            try
+            {
+                renderObject = new AnimatedRenderObject(x,y,filePath,delay);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if(renderObject != null)
+        {
+            entity.bindRenderObject(renderObject);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
