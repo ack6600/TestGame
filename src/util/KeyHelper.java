@@ -1,5 +1,6 @@
 package util;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -11,10 +12,11 @@ public class KeyHelper implements KeyListener
     private boolean isPressed;
     private char keyToPress;
     private Runnable toRun;
-    public KeyHelper(char key,Runnable toRun)
+    public KeyHelper(char key,JFrame jFrame,Runnable toRun)
     {
         keyToPress = key;
         isPressed = false;
+        jFrame.addKeyListener(this);
         this.toRun = toRun;
     }
     public boolean getButtonState()

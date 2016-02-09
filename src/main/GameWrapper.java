@@ -4,7 +4,6 @@ import render.AnimatedRenderObject;
 import render.RenderObject;
 import render.StaticRenderObject;
 import util.KeyHelper;
-import world.Tickable;
 import world.World;
 
 import javax.swing.*;
@@ -37,7 +36,7 @@ public class GameWrapper
     }
     public static void main(String args[])
     {
-        GameWrapper g = null;
+        GameWrapper g;
         JFrame jf = new JFrame();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setSize(300,300);
@@ -57,7 +56,9 @@ public class GameWrapper
         g = new GameWrapper(renderEngine);
         TestEntity testEntity = new TestEntity(g.generateWorld().getTicker(),20,20);
         String[] textures = {"src/textures/floor.png"};
-        g.addTickable(testEntity,textures,testEntity.getPosX(),testEntity.getPosY(),RenderObjectTypes.Static,0);
+        System.out.println(g.addTickable(testEntity,textures,testEntity.getPosX(),testEntity.getPosY(),RenderObjectTypes.Static,0));
+        KeyHelper keyHelper = new KeyHelper('f', jf, () -> testEntity.move(1,0));
+
 
 
     }
@@ -69,6 +70,7 @@ public class GameWrapper
             try
             {
                 renderObject = new StaticRenderObject(filePath[0],x,y);
+
             } catch (IOException e)
             {
                 e.printStackTrace();
@@ -87,6 +89,7 @@ public class GameWrapper
         if(renderObject != null)
         {
             entity.bindRenderObject(renderObject);
+            engine.addObject(renderObject);
             return true;
         }
         else

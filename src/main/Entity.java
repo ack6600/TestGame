@@ -21,6 +21,7 @@ public abstract class Entity extends Tickable
     public void bindRenderObject(RenderObject renderObject)
     {
         this.renderObject = renderObject;
+
     }
 
     public int getPosX()
