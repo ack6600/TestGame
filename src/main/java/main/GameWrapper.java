@@ -34,7 +34,7 @@ public class GameWrapper
             return world;
         }
     }
-    public static void main(String args[])
+    11public static void main(String args[])
     {
         GameWrapper g;
         JFrame jf = new JFrame();
@@ -48,7 +48,7 @@ public class GameWrapper
         RenderEngine renderEngine = null;
         try
         {
-            renderEngine = new RenderEngine(j,144,new File("src/output/"));
+            renderEngine = new RenderEngine(j,60,new File("src/output/"));
         } catch (IOException e)
         {
             e.printStackTrace();
