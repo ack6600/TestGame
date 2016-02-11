@@ -48,7 +48,7 @@ public class GameWrapper
         RenderEngine renderEngine = null;
         try
         {
-            renderEngine = new RenderEngine(j,60,new File("src/output/"));
+            renderEngine = new RenderEngine(j,144,new File("src/output/"));
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class GameWrapper
         g = new GameWrapper(renderEngine);
         TestEntity testEntity = new TestEntity(g.generateWorld().getTicker(),20,20);
         String[] textures = {"src/textures/floor.png"};
-        System.out.println(g.addTickable(testEntity,textures,testEntity.getPosX(),testEntity.getPosY(),RenderObjectTypes.Static,0));
+        g.addTickable(testEntity,textures,testEntity.getPosX(),testEntity.getPosY(),RenderObjectTypes.Static,0);
         KeyHelper keyHelper = new KeyHelper('f', jf, () -> testEntity.move(1,0));
 
 
